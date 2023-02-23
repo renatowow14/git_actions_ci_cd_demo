@@ -15,7 +15,7 @@ on:
 # Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
   # Este fluxo de trabalho contém um único trabalho chamado "build"
-  build:
+  test:
     # O tipo de runner no qual o trabalho será executado
     runs-on: ubuntu-latest
 
