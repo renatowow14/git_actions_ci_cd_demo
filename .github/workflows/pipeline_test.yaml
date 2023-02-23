@@ -23,7 +23,8 @@ jobs:
     steps:
     # Verifica seu repositório no runner
     - name: Checkout Repository
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
+    # Define a versao do node como 14x
     - name: Use Node.js
       uses: actions/setup-node@v2
       with: 
