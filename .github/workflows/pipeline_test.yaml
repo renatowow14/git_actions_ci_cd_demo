@@ -21,9 +21,6 @@ jobs:
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
-      # Faz check-out do seu repositório em $GITHUB_WORKSPACE, para que seu trabalho possa acessá-lo
-      - name: Check-Out
-        uses: actions/checkout@v3
      
       # Executa um único comando usando o shell dos runners
       - name: Run a one-line script
