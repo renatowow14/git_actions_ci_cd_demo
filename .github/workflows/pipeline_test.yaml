@@ -14,13 +14,15 @@ on:
 
 # Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
-  # Este fluxo de trabalho contém um único trabalho chamado "build"
+  # Este fluxo de trabalho contém um único trabalho chamado "teste"
   test:
     # O tipo de runner no qual o trabalho será executado
     runs-on: ubuntu-latest
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
+    # Verifica seu repositório no runner
+    - name: Checkout Repository
     - uses: actions/checkout@v2
     - name: Use Node.js
       uses: actions/setup-node@v2
