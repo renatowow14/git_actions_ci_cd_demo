@@ -21,27 +21,14 @@ jobs:
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
-     
-      # Executa um único comando usando o shell dos runners
-      - name: Run a one-line script
-        run: echo Hello, world!
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: "14.x"
 
-      # Executa um conjunto de comandos usando o shell dos runners
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-      
-      # Usa a versao escolhida do Nodejs 14x
-      - name: Use Node.js
-      - uses: actions/setup-node@v2
-        with: 
-          node-version: "14.x"
+    - name: Install dependencies
+      run: npm install
 
-      # Instala as dependencias
-      - name: Install dependencies
-        run: npm install
-
-      # Roda os testes
-      - name: Run test
-        run: npm test
+    - name: Run test
+      run: npm test
