@@ -1,0 +1,49 @@
+# Opcional - O name do fluxo de trabalho como aparecerá na guia "Ações" do repositório GitHub
+name: CI
+
+# Controla quando o fluxo de trabalho será executado
+on:
+  # Aciona o fluxo de trabalho em eventos push ou pull request, mas apenas para a branch "main"
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Permite que você execute este fluxo de trabalho manualmente na guia Actions.
+  workflow_dispatch:
+
+# Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
+jobs:
+  # Este fluxo de trabalho contém um único trabalho chamado "build"
+  build:
+    # O tipo de runner no qual o trabalho será executado
+    runs-on: ubuntu-latest
+
+    # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
+    steps:
+      # Faz check-out do seu repositório em $GITHUB_WORKSPACE, para que seu trabalho possa acessá-lo
+      - uses: actions/checkout@v3
+     
+      # Executa um único comando usando o shell dos runners
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Executa um conjunto de comandos usando o shell dos runners
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+      
+      # Usa a versao escolhida do Nodejs 14x
+      - name: Use Node.js
+      - uses: actions/setup-node@v2
+        with: 
+          node-version: "14.x"
+
+      # Instala as dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # Roda os testes
+      - name: Run test
+        run: npm test
