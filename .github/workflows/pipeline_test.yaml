@@ -25,13 +25,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
     # Define a versao do node como 14x
-    - name: Use Node.js
+    - name: Define Node.js Version 
       uses: actions/setup-node@v2
       with: 
         node-version: "14.x"
-
+    # Instala as dependencias do projeto
     - name: Install dependencies
       run: cd src/ && npm install
 
+    # Realiza os testes
     - name: Run test
       run: cd src/ && npm test
