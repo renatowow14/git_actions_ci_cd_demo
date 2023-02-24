@@ -16,19 +16,15 @@ on:
 jobs:
 
   checkout:
+  
     runs-on: ubuntu-latest
+
     steps:
+
        # Verifica seu repositório no runner
       - name: Checkout Repository
         uses: actions/checkout@v3
-      
-  install_dependencies:
-    needs: checkout
-    # O tipo de runner no qual o trabalho será executado
-    runs-on: ubuntu-latest
 
-    # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
-    steps:
       # Define a versao do node como 14x
       - name: Define Node.js Version
         uses: actions/setup-node@v3
