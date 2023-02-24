@@ -15,15 +15,20 @@ on:
 # Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
   # Este fluxo de trabalho contém um único trabalho chamado "teste"
-  ci_cd:
+
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+       # Verifica seu repositório no runner
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+  install_dependencies:
     # O tipo de runner no qual o trabalho será executado
     runs-on: ubuntu-latest
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
-      # Verifica seu repositório no runner
-      - name: Checkout Repository
-        uses: actions/checkout@v3
       # Define a versao do node como 14x
       - name: Define Node.js Version
         uses: actions/setup-node@v3
@@ -34,12 +39,18 @@ jobs:
       - name: Install dependencies
         run: cd my-app && npm install
 
+  build_application:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      
       # Faz o Build da Aplicacao
       - name: Build Application
         run: cd my-app && npm run build --if-present
 
       # Faz o teste da Aplicacao
-      - name: Validate Application
+      - name: Test Application
         run: echo "TEST!"
 
       # Faz upload do artefato gerado durante o build
