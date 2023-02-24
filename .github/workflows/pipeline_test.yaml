@@ -28,8 +28,8 @@ jobs:
       - name: Define Node.js Version
         uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
-          
+          node-version: "10.x"
+
       # Instala as dependencias do projeto
       - name: Install dependencies
         run: npm install
