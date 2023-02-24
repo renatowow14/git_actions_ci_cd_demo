@@ -28,23 +28,23 @@ jobs:
       - name: Define Node.js Version
         uses: actions/setup-node@v3
         with:
-          node-version: "10.x"
+          node-version: "14.x"
 
       # Instala as dependencias do projeto
       - name: Install dependencies
-        run: npm install
+        run: cd my-app && npm install
 
       # Faz o Build da Aplicacao
       - name: Build Application
-        run: npm build --if-present
+        run: cd my-app && npm run build --if-present
       
       # Faz o Build da Aplicacao
       - name: Validate Application
-        run: npm run test --if-present
+        run: cd my-app && npm run test --if-present
 
       # Faz upload do artefato gerado durante o build
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: my-app/dist
