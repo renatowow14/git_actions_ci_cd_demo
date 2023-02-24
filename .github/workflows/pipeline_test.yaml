@@ -29,13 +29,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "14.x"
+          
       # Instala as dependencias do projeto
       - name: Install dependencies
         run: npm install
-
-      # Faz o Build da Aplicacao
-      - name: Build Application
-        run: npm build --if-present
 
       # Faz o Build da Aplicacao
       - name: Build Application
