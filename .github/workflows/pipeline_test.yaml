@@ -5,9 +5,9 @@ name: CI
 on:
   # Aciona o fluxo de trabalho em eventos push ou pull request, mas apenas para a branch "main"
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Permite que você execute este fluxo de trabalho manualmente na guia Actions.
   workflow_dispatch:
@@ -21,18 +21,33 @@ jobs:
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
-    # Verifica seu repositório no runner
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-    # Define a versao do node como 14x
-    - name: Define Node.js Version 
-      uses: actions/setup-node@v2
-      with: 
-        node-version: "14.x"
-    # Instala as dependencias do projeto
-    - name: Install dependencies
-      run: cd src/ && npm install
+      # Verifica seu repositório no runner
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      # Define a versao do node como 14x
+      - name: Define Node.js Version
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14.x"
+      # Instala as dependencias do projeto
+      - name: Install dependencies
+        run: npm install
 
-    # Realiza os testes
-    - name: Run test
-      run: cd src/ && npm test
+      # Faz o Build da Aplicacao
+      - name: Build Application
+        run: npm build --if-present
+
+      # Faz o Build da Aplicacao
+      - name: Build Application
+        run: npm build --if-present
+      
+      # Faz o Build da Aplicacao
+      - name: Validate Application
+        run: npm run test --if-present
+
+      # Faz upload do artefato gerado durante o build
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: .
