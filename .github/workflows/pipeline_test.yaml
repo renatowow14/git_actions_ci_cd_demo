@@ -1,5 +1,5 @@
 # Opcional - O name do fluxo de trabalho como aparecerá na guia "Ações" do repositório GitHub
-name: CI
+name: CI/CD Example
 
 # Controla quando o fluxo de trabalho será executado
 on:
