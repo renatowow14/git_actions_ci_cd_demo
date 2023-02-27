@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-github-actions-amazon-s3-demo'`, () => {
+  it(`should have as title 'angular-github-actions-amazon-s3'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-github-actions-amazon-s3-demo');
+    expect(app.title).toEqual('angular-github-actions-amazon-s3');
   });
 
   it('should render title', () => {
