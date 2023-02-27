@@ -52,13 +52,13 @@ jobs:
         run: npm run build:prod
 
         # Se tiver tido sucesso, faz o deploy da app no AWS S3
-      - name: Deploy
+      - name: Deploy Application on AWS S3 Bucket
         if: success()
-        run: aws s3 sync ./dist/angular-github-actions-amazon-s3 s3://angular-github-actions-amazon-s3-demo
+        run: aws s3 sync ./dist/angular-github-actions-amazon-s3-demo-demo s3://angular-github-actions-amazon-s3-demo-demo-demo
 
         # Faz upload do artefato gerado durante o build
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: my-app/dist
+          name: node-app-dist
+          path: ./dist/angular-github-actions-amazon-s3-demo-demo
