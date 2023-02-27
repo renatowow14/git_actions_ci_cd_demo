@@ -14,32 +14,51 @@ on:
 
 # Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
-  # Este fluxo de trabalho contém um único trabalho chamado "teste"
+  # Este fluxo de trabalho contém um único trabalho chamado "ci_cd"
   ci_cd:
     # O tipo de runner no qual o trabalho será executado
     runs-on: ubuntu-latest
 
     # As etapas representam uma sequência de tarefas que serão executadas como parte do trabalho
     steps:
+      # Configura as credenciais de acesso ao bucket da AWS S3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION_NAME }}
 
       # Verifica seu repositório no runner
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Define a versao do node como 16x
+        # Define a versao do node como 16x
       - name: Define Node.js Version
         uses: actions/setup-node@v3
         with:
           node-version: "16.x"
 
-      # Instala as dependencias do projeto
+        # Instala as dependencias do projeto
       - name: Install dependencies
         run: npm install
 
-      # Faz o teste da Aplicacao
+        # Faz o teste da Aplicacao
       - name: Run tests
         run: npm run test:headless
 
-      # Faz o Build da Aplicacao
+        # Faz o Build da Aplicacao
       - name: Build Application
         run: npm run build:prod
+
+        # Se tiver tido sucesso, faz o deploy da app no AWS S3
+      - name: Deploy
+        if: success()
+        run: aws s3 sync ./dist/angular-github-actions-amazon-s3 s3://angular-github-actions-amazon-s3-demo
+
+        # Faz upload do artefato gerado durante o build
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: my-app/dist
