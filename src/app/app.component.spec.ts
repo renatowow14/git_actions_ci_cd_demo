@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-github-actions-amazon-s3-demo-demo'`, () => {
+  it(`should have as title 'angular-github-actions-amazon-s3-demo'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-github-actions-amazon-s3-demo-demo');
+    expect(app.title).toEqual('angular-github-actions-amazon-s3-demo');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('angular-github-actions-amazon-s3-demo app-demo is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('angular-github-actions-amazon-s3 app-demo is running!');
   });
 });
