@@ -1,6 +1,9 @@
 # Opcional - O name do fluxo de trabalho como aparecerá na guia "Ações" do repositório GitHub
 name: CI/CD Example
 
+# Exibir o nome de usuário do ator que acionou a execução do fluxo de trabalho. 
+run-name: ${{ github.actor }} is running pipeline on GitHub Actions
+
 # Controla quando o fluxo de trabalho será executado
 on:
   # Aciona o fluxo de trabalho em eventos push ou pull request, mas apenas para a branch "main"
