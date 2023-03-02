@@ -1,6 +1,6 @@
 name: Matrix Testing
 
-run-name: ${{ github.actor }} is running pipeline on GitHub Actions
+run-name: ${{ github.actor }} is running Matrix_Testing pipeline on GitHub Actions
 
 on:
   push:
@@ -15,11 +15,12 @@ on:
 jobs:
 
   matrix_testing:
+
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: ['16', '17', '18']
+        node_version: ['16', '17', '>=18']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
@@ -34,9 +35,3 @@ jobs:
         npm install
         npm run build
         npm run test:headless
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: node-app-dist
-        path: ./dist/angular-github-actions-amazon-s3
