@@ -2,7 +2,7 @@
 name: CI/CD Example
 
 # Exibir o nome de usuário do ator que acionou a execução do fluxo de trabalho. 
-run-name: ${{ github.actor }} is running pipeline on GitHub Actions
+run-name: ${{ github.actor }} is running CI/CD pipeline on GitHub Actions
 
 # Controla quando o fluxo de trabalho será executado
 on:
