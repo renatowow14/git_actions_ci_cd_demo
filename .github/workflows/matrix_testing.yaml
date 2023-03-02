@@ -1,8 +1,12 @@
+# Opcional - O name do fluxo de trabalho como aparecerá na guia "Ações" do repositório GitHub
 name: Matrix Testing
 
-run-name: ${{ github.actor }} is running pipeline on GitHub Actions
+# Exibir o nome de usuário do ator que acionou a execução do fluxo de trabalho. 
+run-name: ${{ github.actor }} is running Matrix_Testing pipeline on GitHub Actions
 
+# Controla quando o fluxo de trabalho será executado
 on:
+  # Aciona o fluxo de trabalho em eventos push ou pull request, mas apenas para a branch "release/*"
   push:
     branches: 
       - release/*
@@ -10,33 +14,33 @@ on:
     branches: 
       - release/*
 
+  # Permite que você execute este fluxo de trabalho manualmente na guia Actions.
   workflow_dispatch:
 
+# Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
-
+  # Este fluxo de trabalho contém um único trabalho chamado "matrix_testing"
   matrix_testing:
+
+    # Faz o uso de varias versoes do nodejs e de sistemas operacionais diferentes
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: ['10', '12', '14']
+        node_version: ['16', '17', '>=18']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
+    # Para cada um faz o checkout e seta a versao do node deseajda
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node_version }}
 
+    # Instala as dependencias, faz o build e roda o teste de cada um.
     - name: npm install, build and test
       run: |
         npm install
-        npm run build:prod --if-present
+        npm run build
         npm run test:headless
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: node-app-dist
-        path: ./dist/angular-github-actions-amazon-s3
