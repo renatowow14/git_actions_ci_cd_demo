@@ -44,7 +44,6 @@ jobs:
         npm run test:headless
 
   ci_cd:
-    needs: matrix_testing
     # O tipo de runner no qual o trabalho será executado
     runs-on: ubuntu-latest
 
