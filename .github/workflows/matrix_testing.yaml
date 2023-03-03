@@ -1,8 +1,12 @@
+# Opcional - O name do fluxo de trabalho como aparecerá na guia "Ações" do repositório GitHub
 name: Matrix Testing
 
+# Exibir o nome de usuário do ator que acionou a execução do fluxo de trabalho. 
 run-name: ${{ github.actor }} is running Matrix_Testing pipeline on GitHub Actions
 
+# Controla quando o fluxo de trabalho será executado
 on:
+  # Aciona o fluxo de trabalho em eventos push ou pull request, mas apenas para a branch "release/*"
   push:
     branches: 
       - release/*
@@ -10,52 +14,35 @@ on:
     branches: 
       - release/*
 
+  # Permite que você execute este fluxo de trabalho manualmente na guia Actions.
   workflow_dispatch:
 
+# Uma execução de fluxo de trabalho é composta por um ou mais trabalhos que podem ser executados sequencialmente ou em paralelo.
 jobs:
-
+  # Este fluxo de trabalho contém um único trabalho chamado "matrix_testing"
   matrix_testing:
 
+    # Faz o uso de varias versoes do nodejs e de sistemas operacionais diferentes
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-
+     # Impede que o GitHub cancele todos os trabalhos em andamento se algum trabalho de matriz falhar.
+    fail-fast: false
     strategy:
-      fail-fast: false
       matrix:
         node_version: ['16', '17', '>=18']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
+    # Para cada um faz o checkout e seta a versao do node deseajda
     steps:
-    
-    - name: Check out repo
-      uses: actions/checkout@v3
-
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node_version }}
 
+    # Instala as dependencias, faz o build e roda o teste de cada um.
     - name: npm install, build and test
       run: |
-        npm install 
-        npm run build:prod --if-present
+        npm install
+        npm run build
         npm run test:headless
-
-    - name: Cache node modules
-      id: cache-npm
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-          
-    - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
-      continue-on-error: true
-      run: npm list
