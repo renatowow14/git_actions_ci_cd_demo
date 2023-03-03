@@ -31,14 +31,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node_version }}
-        cache: npm
 
     - name: npm install, build and test
       run: |
         npm install 
         npm run build:prod --if-present
         npm run test:headless
-        
+
     - name: Cache node modules
       id: cache-npm
       uses: actions/cache@v3
