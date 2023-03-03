@@ -25,7 +25,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v3
+
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+      with:
+        lfs: ${{ matrix.test-group == 'content' }}
+        persist-credentials: 'false'
+
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v3
       with:
