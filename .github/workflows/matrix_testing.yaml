@@ -18,6 +18,7 @@ jobs:
 
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    
     strategy:
       fail-fast: false
       matrix:
@@ -26,11 +27,8 @@ jobs:
 
     steps:
 
-    - name: Checkout Repo
+    - name: Checkout Repository
       uses: actions/checkout@v3
-      with:
-        lfs: ${{ matrix.test-group == 'content' }}
-        persist-credentials: 'false'
 
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v3
